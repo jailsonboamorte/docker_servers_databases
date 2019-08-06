@@ -1,0 +1,41 @@
+version: "2"
+
+services:
+
+    mysql:
+        build:
+          context: ./docker/mysql
+          args:
+            - MYSQL_VERSION=${MYSQL_VERSION}
+        container_name: ${MYSQL_CONTAINER_NAME}
+        environment:
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_USER=${MYSQL_USER}
+          - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+          - "${MYSQL_PORT}:3306"
+        networks:
+          - localhost
+        volumes:
+          - ${MYSQLDATA_PATH_HOST}:/var/lib/mysql
+          - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+          - /etc/localtime:/etc/localtime:ro 
+        restart: always
+        
+    mongodb:
+        build:
+          context: ./docker/mongodb
+        container_name: ${MONGODB_CONTAINER_NAME}
+        restart: always
+        volumes:
+            - ${MONGODB_PATH_HOST}:/data/db
+            - /etc/localtime:/etc/localtime:ro 
+            - ${MONGODB_PATH_DUMPS_HOST}:/backup
+        ports:
+            - "${MONGODB_PORT}:27017"
+        networks:
+          - localhost
+networks:
+  localhost:
+    driver: bridge
