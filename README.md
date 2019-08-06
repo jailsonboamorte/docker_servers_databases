@@ -1,4 +1,4 @@
-# DOCKER DATAABSE
+# DOCKER DATABASES
 
 
 ## Prerequisites
