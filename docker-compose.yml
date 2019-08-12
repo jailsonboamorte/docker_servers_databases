@@ -2,24 +2,45 @@ version: "2"
 
 services:
 
-    mysql:
+    mysql_5_7:
         build:
-          context: ./docker/mysql
+          context: ./docker/mysql_5_7
           args:
-            - MYSQL_VERSION=${MYSQL_VERSION}
-        container_name: ${MYSQL_CONTAINER_NAME}
+            - MYSQL_VERSION=${MYSQL_VERSION_5_7}
+        container_name: ${MYSQL_CONTAINER_NAME_5_7}
         environment:
           - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
           - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
           - MYSQL_USER=${MYSQL_USER}
           - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-          - "${MYSQL_PORT}:3306"
+          - "${MYSQL_PORT_5_7}:3306"
         networks:
           - localhost
         volumes:
-          - ${MYSQLDATA_PATH_HOST}:/var/lib/mysql
-          - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+          - ${MYSQLDATA_PATH_HOST_5_7}:/var/lib/mysql
+          - ${MYSQL_ENTRYPOINT_INITDB_5_7}:/docker-entrypoint-initdb.d
+          - /etc/localtime:/etc/localtime:ro 
+        restart: always
+
+    mysq_5_6:
+        build:
+          context: ./docker/mysql_5_6
+          args:
+            - MYSQL_VERSION=${MYSQL_VERSION_5_6}
+        container_name: ${MYSQL_CONTAINER_NAME_5_6}
+        environment:
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_USER=${MYSQL_USER}
+          - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+          - "${MYSQL_PORT_5_6}:3306"
+        networks:
+          - localhost
+        volumes:
+          - ${MYSQLDATA_PATH_HOST_5_6}:/var/lib/mysql
+          - ${MYSQL_ENTRYPOINT_INITDB_5_6}:/docker-entrypoint-initdb.d
           - /etc/localtime:/etc/localtime:ro 
         restart: always
         

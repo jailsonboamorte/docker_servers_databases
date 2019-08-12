@@ -14,25 +14,41 @@
 
 ##### .env sample
 ```
+
 ### Timezone ###############################################
 TZ=America/Bahia
 
+
 ### MYSQL #################################################
-MYSQLDATA_PATH_HOST= **where you will save the data**
-MYSQL_VERSION=5.7
-MYSQL_CONTAINER_NAME=mysql5_7
-MYSQL_DATABASE=mysql5_7
 MYSQL_USER=sistema
 MYSQL_PASSWORD=$sistem#@
-MYSQL_PORT=3207
 MYSQL_ROOT_PASSWORD=root
-MYSQL_ENTRYPOINT_INITDB=./docker/mysql/docker-entrypoint-initdb.d////
+
+### MYSQL 5.7 #################################################
+MYSQLDATA_PATH_HOST_5_7=**where you will save the data**
+MYSQL_VERSION_5_7=5.7
+MYSQL_CONTAINER_NAME_5_7=mysql5_7
+MYSQL_DATABASE_5_7=mysql5_7
+MYSQL_PORT_5_7=3207
+MYSQL_ROOT_PASSWORD=root
+MYSQL_ENTRYPOINT_INITDB_5_7=./docker/mysql_5_7/docker-entrypoint-initdb.d////
+
+
+### MYSQL 5.6 #################################################
+MYSQLDATA_PATH_HOST_5_6=**where you will save the data**
+MYSQL_VERSION_5_6=5.6
+MYSQL_CONTAINER_NAME_5_6=mysql5_6
+MYSQL_DATABASE_5_6=mysql5_6
+MYSQL_PORT_5_6=3306
+MYSQL_ENTRYPOINT_INITDB_5_6=./docker/mysql_5_6/docker-entrypoint-initdb.d////
 
 ### MONGO #################################################
 MONGODB_CONTAINER_NAME=mongodb_server_docker
-MONGODB_PATH_HOST= _where you will save the data_
-MONGODB_PATH_DUMPS_HOST= **where you will make the dumps**
+MONGODB_PATH_HOST=**where you will save the data**
+MONGODB_PATH_DUMPS_HOST=**where you will make the dumps**
 MONGODB_PORT=27017
+
+
 ```
 
 ```
