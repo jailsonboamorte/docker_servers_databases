@@ -23,7 +23,7 @@ services:
           - /etc/localtime:/etc/localtime:ro 
         restart: always
 
-    mysq_5_6:
+    mysql_5_6:
         build:
           context: ./docker/mysql_5_6
           args:
