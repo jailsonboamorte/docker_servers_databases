@@ -14,9 +14,7 @@ services:
           - MYSQL_USER=${MYSQL_USER}
           - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-          - "${MYSQL_PORT_5_7}:3306"
-        networks:
-          - localhost
+          - "${MYSQL_PORT_5_7}:3306"        
         volumes:
           - ${MYSQLDATA_PATH_HOST_5_7}:/var/lib/mysql
           - ${MYSQL_ENTRYPOINT_INITDB_5_7}:/docker-entrypoint-initdb.d
@@ -35,9 +33,7 @@ services:
           - MYSQL_USER=${MYSQL_USER}
           - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-          - "${MYSQL_PORT_5_6}:3306"
-        networks:
-          - localhost
+          - "${MYSQL_PORT_5_6}:3306"        
         volumes:
           - ${MYSQLDATA_PATH_HOST_5_6}:/var/lib/mysql
           - ${MYSQL_ENTRYPOINT_INITDB_5_6}:/docker-entrypoint-initdb.d
@@ -54,9 +50,8 @@ services:
             - /etc/localtime:/etc/localtime:ro 
             - ${MONGODB_PATH_DUMPS_HOST}:/backup
         ports:
-            - "${MONGODB_PORT}:27017"
-        networks:
-          - localhost
+            - "${MONGODB_PORT}:27017"        
 networks:
-  localhost:
-    driver: bridge
+  default:
+    external:
+      name: ${NETWORK}
