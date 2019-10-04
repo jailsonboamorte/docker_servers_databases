@@ -39,16 +39,20 @@ services:
           - ${MYSQL_ENTRYPOINT_INITDB_5_6}:/docker-entrypoint-initdb.d
           - /etc/localtime:/etc/localtime:ro 
         restart: always
-        
     mongodb:
         build:
           context: ./docker/mongodb
+          args:
+            - MONGODB_VERSION=${MONGODB_VERSION}
         container_name: ${MONGODB_CONTAINER_NAME}
         restart: always
         volumes:
-            - ${MONGODB_PATH_HOST}:/data/db
+            - ${MONGODB_PATH_HOST}/${MONGODB_VERSION}:/data/db
             - /etc/localtime:/etc/localtime:ro 
-            - ${MONGODB_PATH_DUMPS_HOST}:/backup
+            - ${MONGODB_PATH_DUMPS_HOST}:/backup 
+        environment:          
+          MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+          MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
         ports:
             - "${MONGODB_PORT}:27017"        
 networks:
