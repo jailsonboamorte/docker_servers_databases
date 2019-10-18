@@ -1,2 +1,5 @@
 ### ENV ###
 *.env
+
+### LOGS ###
+logs/

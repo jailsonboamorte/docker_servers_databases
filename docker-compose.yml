@@ -44,6 +44,11 @@ services:
           context: ./docker/mongodb
           args:
             - MONGODB_VERSION=${MONGODB_VERSION}
+        logging:
+            driver: "json-file"
+            options:
+                max-file: "5"
+                max-size: "10m"                  
         container_name: ${MONGODB_CONTAINER_NAME}
         restart: always
         volumes:
