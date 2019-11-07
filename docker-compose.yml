@@ -1,4 +1,4 @@
-version: "2"
+version: "3.3"
 
 services:
 
@@ -40,10 +40,17 @@ services:
           - /etc/localtime:/etc/localtime:ro 
         restart: always
     mongodb:
-        build:
+        privileged: true
+        build:                  
           context: ./docker/mongodb
           args:
-            - MONGODB_VERSION=${MONGODB_VERSION}
+            - MONGODB_VERSION=${MONGODB_VERSION}          
+        sysctls:
+            - net.core.somaxconn=4096
+            - net.ipv4.tcp_fin_timeout=30
+            - net.ipv4.tcp_keepalive_intvl=30
+            - net.ipv4.tcp_keepalive_time=120
+            - net.ipv4.tcp_max_syn_backlog=4096            
         logging:
             driver: "json-file"
             options:
@@ -53,7 +60,8 @@ services:
         restart: always
         volumes:
             - ${MONGODB_PATH_HOST}/${MONGODB_VERSION}:/data/db
-            - /etc/localtime:/etc/localtime:ro 
+            - /etc/localtime:/etc/localtime:ro  
+            - /docker/mongodb/mongodb-sysctl.conf:/etc/sysctl.d/mongodb-sysctl.conf         
             - ${MONGODB_PATH_DUMPS_HOST}:/backup 
         environment:          
           MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
